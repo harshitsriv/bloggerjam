@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% for post in object_list %}
+<div>
+    <a href="{% url 'blog_detail' post.pk %}"><h5>{{post.title}}</h5></a> 
+    <em>( <a href="{% url 'category_blogs' post.category %}">{{post.category}}</a> )</em>
+    <em>Added by {{post.author}} on {{post.publish_date}}</>
+    <p>{{post.body | slice:":200"}}</p>
+    <hr>
+    {{post.total_likes }} likes
+    <br>
+</div>
+{% endfor %}
+
+{% endblock %}

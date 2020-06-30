@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{{post.title_tag}}
+{% endblock %}
+
+{% block content %}
+<br>
+<h4>{{post.title}}</h4>
+
+<em>Added by {{post.author}} on {{post.publish_date}}</em>
+<hr>
+<p>{{post.body | safe}}</p> 
+
+{% if user.is_authenticated %}
+<form method="POST" action="{% url 'like_post' post.pk %}">
+    {% csrf_token %}
+    {% if liked %}
+        <button type="submit" name="post_id" value = "{{post.id}}" class="btn btn-danger">Dislike</button>
+    {% else %}
+        <button type="submit" name="post_id" value = "{{post.id}}" class="btn btn-primary">Like</button>
+    {% endif %}
+    {{total_likes}} likes   
+</form>
+{% else %}
+    <p><a href="{% url 'login' %}">Login</a> to like this post</p>
+{% endif %}
+
+<br>
+
+{% if user.is_authenticated and user == post.author%}
+
+<a type="button" class="btn btn-secondary" href="{% url 'edit_blog' post.pk %}">Edit</a>
+
+<a type="button" class="btn btn-danger" href="{% url 'delete_blog' post.pk %}">Remove</a>
+{% endif %}
+{% endblock %} 
+

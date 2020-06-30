@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for post in blogs %}
+<div>
+    <a href="{% url 'blog_detail' post.pk %}"><h5>{{post.title}}</h5></a>
+    <em>Added by {{post.author}} on {{post.publish_date}}</em>
+    <p>{{post.body | slice:":200"}}</p>
+    <br><br>
+</div>
+{% endfor %}
+
+{% endblock %}
